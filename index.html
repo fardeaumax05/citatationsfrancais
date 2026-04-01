@@ -23,6 +23,32 @@ h1 {
   margin-bottom: 18px;
 }
 
+/* ── MODE TABS ── */
+.mode-tabs {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.mode-tab {
+  background: #0e1e30;
+  border: 1px solid #2a3a50;
+  color: #6a8aaa;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: .72rem;
+  font-family: Georgia, serif;
+  letter-spacing: .05em;
+  transition: all .2s;
+}
+.mode-tab.active {
+  border-color: #7ec8e3;
+  color: #7ec8e3;
+  background: #0e2a40;
+}
+
 /* ── WORK TABS ── */
 .work-tabs {
   display: flex;
@@ -204,49 +230,322 @@ h1 {
 .progress-fill.work-0 { background: linear-gradient(90deg,#1e6a8a,#7ec8e3); }
 .progress-fill.work-1 { background: linear-gradient(90deg,#1e6a3a,#6ecf7a); }
 .progress-fill.work-2 { background: linear-gradient(90deg,#6a3a1e,#e3a87e); }
+
+/* ════════════════════════════════
+   MODE DICTÉE LIBRE
+════════════════════════════════ */
+#dicteeMode { display: none; }
+#normalMode { display: block; }
+
+.dictee-card {
+  background: #0e2233;
+  border: 1px solid #1e4a6a;
+  border-radius: 14px;
+  min-height: 320px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.dictee-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.dictee-card.dc-work-0::before { background: linear-gradient(90deg,#1e6a8a,#7ec8e3,#1e6a8a); }
+.dictee-card.dc-work-1::before { background: linear-gradient(90deg,#2a6a3a,#6ecf7a,#2a6a3a); }
+.dictee-card.dc-work-2::before { background: linear-gradient(90deg,#6a3a1e,#e3a87e,#6a3a1e); }
+
+.dictee-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.dictee-oeuvre {
+  font-size: .65rem;
+  color: #4a7a9a;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.dc-work-1 .dictee-oeuvre { color: #4a8a5a; }
+.dc-work-2 .dictee-oeuvre { color: #9a7a4a; }
+
+.dictee-prompt-label {
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #5a8aaa;
+  margin-bottom: 4px;
+}
+.dc-work-1 .dictee-prompt-label { color: #4a8a5a; }
+.dc-work-2 .dictee-prompt-label { color: #aa8a5a; }
+
+.dictee-prompt-text {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #c8dce8;
+  font-style: italic;
+}
+.dictee-hint {
+  font-size: .75rem;
+  color: #3a6a8a;
+}
+
+.dictee-textarea {
+  width: 100%;
+  min-height: 90px;
+  background: #081828;
+  border: 1px solid #1e3a5a;
+  border-radius: 8px;
+  color: #e8dfc8;
+  font-family: Georgia, serif;
+  font-size: .9rem;
+  line-height: 1.6;
+  padding: 10px 13px;
+  resize: vertical;
+  outline: none;
+  transition: border-color .2s;
+}
+.dictee-textarea:focus { border-color: #2d6a8a; }
+.dc-work-1 .dictee-textarea:focus { border-color: #2d8a4a; }
+.dc-work-2 .dictee-textarea:focus { border-color: #8a6a2d; }
+
+.dictee-textarea.correct {
+  border-color: #3a9a4a !important;
+  background: #061408;
+}
+.dictee-textarea.wrong {
+  border-color: #9a3a3a !important;
+  background: #180808;
+}
+
+.dictee-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.btn-verif {
+  background: linear-gradient(135deg,#1a4a72,#1e6a8a);
+  border: none;
+  color: #e8f4f8;
+  padding: 9px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .85rem;
+  font-family: Georgia, serif;
+  letter-spacing: .04em;
+  transition: opacity .2s;
+}
+.dc-work-1 .btn-verif { background: linear-gradient(135deg,#1a4a22,#1e7a3a); }
+.dc-work-2 .btn-verif { background: linear-gradient(135deg,#4a2a0a,#8a5a1e); }
+.btn-verif:hover { opacity: .84; }
+
+.btn-skip {
+  background: transparent;
+  border: 1px solid #2a4a6a;
+  color: #5a8aaa;
+  padding: 9px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .85rem;
+  font-family: Georgia, serif;
+  transition: border-color .2s, color .2s;
+}
+.btn-skip:hover { border-color: #5a8aaa; color: #7ec8e3; }
+
+/* RÉSULTAT */
+.dictee-result {
+  display: none;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: .82rem;
+  line-height: 1.6;
+}
+.dictee-result.show { display: block; }
+.dictee-result.ok {
+  background: #061408;
+  border: 1px solid #2a6a3a;
+  color: #6ecf7a;
+}
+.dictee-result.nok {
+  background: #180808;
+  border: 1px solid #6a2a2a;
+  color: #e8b8b8;
+}
+.result-label {
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-style: normal;
+}
+.result-citation {
+  font-style: italic;
+  color: #e8dfc8;
+  border-left: 3px solid #2d6a8a;
+  padding-left: 10px;
+  margin-top: 8px;
+}
+.nok .result-citation { border-left-color: #8a4a2d; }
+.ok .result-citation { border-left-color: #2d8a4a; }
+
+/* score badge */
+.dictee-score-bar {
+  max-width: 680px;
+  margin: 14px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.dictee-progress {
+  flex: 1;
+  background: #0e2233;
+  border-radius: 4px;
+  height: 4px;
+  overflow: hidden;
+}
+.dictee-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg,#1e6a8a,#7ec8e3);
+  transition: width .3s;
+}
+.score-text {
+  font-size: .75rem;
+  color: #5a8aaa;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Session terminée */
+.session-end {
+  display: none;
+  max-width: 680px;
+  margin: 0 auto;
+  background: #0e2233;
+  border: 1px solid #1e4a6a;
+  border-radius: 14px;
+  padding: 36px 28px;
+  text-align: center;
+}
+.session-end.show { display: block; }
+.session-end h2 { color: #7ec8e3; font-size: 1.2rem; margin-bottom: 10px; }
+.session-end .final-score { font-size: 2.8rem; color: #e8dfc8; margin: 18px 0; }
+.session-end .final-score span { font-size: 1rem; color: #5a8aaa; }
+.btn-restart {
+  background: linear-gradient(135deg,#1a4a72,#1e6a8a);
+  border: none;
+  color: #e8f4f8;
+  padding: 11px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: .9rem;
+  font-family: Georgia, serif;
+  margin-top: 10px;
+  transition: opacity .2s;
+}
+.btn-restart:hover { opacity: .84; }
 </style>
 </head>
 <body>
 
 <h1>Anki · 3 Œuvres · 45 Citations</h1>
 
-<div class="work-tabs">
-  <button class="work-tab active" onclick="switchWork(0)">
-    Vingt Mille Lieues sous les mers
-    <span class="author">Jules Verne</span>
-  </button>
-  <button class="work-tab" onclick="switchWork(1)">
-    La Connaissance de la vie
-    <span class="author">Georges Canguilhem</span>
-  </button>
-  <button class="work-tab" onclick="switchWork(2)">
-    Le Mur invisible
-    <span class="author">Marlen Haushofer</span>
-  </button>
+<!-- MODE TABS -->
+<div class="mode-tabs">
+  <button class="mode-tab active" onclick="switchMode('normal')">📖 Révision</button>
+  <button class="mode-tab" onclick="switchMode('dictee')">✍️ Dictée libre</button>
 </div>
 
-<div class="nav">
-  <button id="prevBtn" onclick="changeCard(-1)" disabled>◀</button>
-  <span class="counter" id="counter">1 / 15</span>
-  <button id="nextBtn" onclick="changeCard(1)">▶</button>
+<!-- ══════════ MODE NORMAL ══════════ -->
+<div id="normalMode">
+  <div class="work-tabs">
+    <button class="work-tab active" onclick="switchWork(0)">
+      Vingt Mille Lieues sous les mers
+      <span class="author">Jules Verne</span>
+    </button>
+    <button class="work-tab" onclick="switchWork(1)">
+      La Connaissance de la vie
+      <span class="author">Georges Canguilhem</span>
+    </button>
+    <button class="work-tab" onclick="switchWork(2)">
+      Le Mur invisible
+      <span class="author">Marlen Haushofer</span>
+    </button>
+  </div>
+
+  <div class="nav">
+    <button id="prevBtn" onclick="changeCard(-1)" disabled>◀</button>
+    <span class="counter" id="counter">1 / 15</span>
+    <button id="nextBtn" onclick="changeCard(1)">▶</button>
+  </div>
+
+  <div class="card-wrapper">
+    <div class="card" id="card"></div>
+    <button class="flip-btn work-0" onclick="flipCard()" id="flipBtn">Voir la citation ▾</button>
+    <div class="progress-bar"><div class="progress-fill work-0" id="progressFill"></div></div>
+  </div>
 </div>
 
-<div class="card-wrapper">
-  <div class="card" id="card"></div>
-  <button class="flip-btn work-0" onclick="flipCard()" id="flipBtn">Voir la citation ▾</button>
-  <div class="progress-bar"><div class="progress-fill work-0" id="progressFill"></div></div>
+<!-- ══════════ MODE DICTÉE ══════════ -->
+<div id="dicteeMode">
+
+  <!-- Carte dictée -->
+  <div class="dictee-card" id="dicteeCard">
+    <div class="dictee-meta">
+      <span class="theme-badge" id="dicteeTheme"></span>
+      <span class="dictee-oeuvre" id="dicteeOeuvre"></span>
+    </div>
+    <div>
+      <div class="dictee-prompt-label">Question</div>
+      <div class="dictee-prompt-text" id="dicteePrompt"></div>
+      <div class="dictee-hint" id="dicteeHint"></div>
+    </div>
+    <textarea class="dictee-textarea" id="dicteeInput" placeholder="Écrivez la citation ici…"></textarea>
+    <div class="dictee-actions">
+      <button class="btn-verif" id="btnVerif" onclick="verifier()">Vérifier ✓</button>
+      <button class="btn-skip" onclick="nextDictee()">Passer →</button>
+    </div>
+    <div class="dictee-result" id="dicteeResult">
+      <div class="result-label" id="resultLabel"></div>
+      <div id="resultMsg"></div>
+      <div class="result-citation" id="resultCitation"></div>
+      <button class="btn-verif" style="margin-top:12px;" onclick="nextDictee()">Carte suivante →</button>
+    </div>
+  </div>
+
+  <!-- Fin de session -->
+  <div class="session-end" id="sessionEnd">
+    <h2>Session terminée !</h2>
+    <div class="final-score"><span id="finalOk">0</span> / <span id="finalTotal">0</span> <span>bonnes réponses</span></div>
+    <div id="finalMsg" style="color:#a0b8c8;font-size:.85rem;margin-bottom:6px;"></div>
+    <button class="btn-restart" onclick="startDictee()">Recommencer</button>
+  </div>
+
+  <!-- Barre de progression -->
+  <div class="dictee-score-bar">
+    <div class="dictee-progress"><div class="dictee-progress-fill" id="dicteeProgressFill" style="width:0%"></div></div>
+    <div class="score-text" id="dicteeScoreText">0 / 0</div>
+  </div>
 </div>
 
 <script>
+/* ══════════════════════════════════════════
+   DONNÉES
+══════════════════════════════════════════ */
 const works = [
-  /* ══════════════════════════════════════════
-     0 — VINGT MILLE LIEUES SOUS LES MERS
-  ══════════════════════════════════════════ */
+  /* 0 — VINGT MILLE LIEUES */
   [
     {
       theme:"Liberté & misanthropie",
       prompt:"Quelle est la devise philosophique de Nemo sur la liberté en mer ?",
-      hint:"Réplique au professeur Aronnax (partie I, chap. X)",
+      hint:"💡 Réplique au professeur Aronnax (partie I, chap. X)",
       citation:"« Ah ! monsieur, vivez, vivez au sein des mers ! Là seulement est l'indépendance ! Là je ne reconnais pas de maîtres ! Là je suis libre ! »",
       ref:"Partie I, chap. X, p. 125",
       analyse:"<strong>Thème :</strong> La mer comme espace d'affranchissement absolu. La triple exclamation et l'anaphore de « Là » signalent une <em>utopie sous-marine</em> : la mer s'oppose point par point à la société terrestre — contrainte, hiérarchie, enfermement."
@@ -254,7 +553,7 @@ const works = [
     {
       theme:"Rupture sociale",
       prompt:"En une phrase, comment Nemo résume-t-il son rapport à la société humaine ?",
-      hint:"Aveu capital (partie I, chap. X)",
+      hint:"💡 Aveu capital (partie I, chap. X)",
       citation:"« J'ai rompu avec la société tout entière. »",
       ref:"Partie I, chap. X, p. 118",
       analyse:"<strong>Thème :</strong> Formule lapidaire, presque testamentaire. L'isolement volontaire n'est pas fuite mais <em>refus radical</em>. La brièveté de la phrase mime la rupture elle-même : nette, sans appel."
@@ -262,7 +561,7 @@ const works = [
     {
       theme:"Indicible / limite du langage",
       prompt:"Pourquoi Aronnax doute-t-il de pouvoir raconter ses aventures sous-marines ?",
-      hint:"Réflexion sur la narration (partie I, chap. XVI)",
+      hint:"💡 Réflexion sur la narration (partie I, chap. XVI)",
       citation:"« comment pourrais-je retracer les impressions que m'a laissées cette promenade sous les eaux ? Les mots sont impuissants à raconter de telles merveilles ! »",
       ref:"Partie I, chap. XVI, p. 185",
       analyse:"<strong>Thème :</strong> Mise en abyme réflexive : le narrateur questionne sa propre capacité à écrire. Le sublime naturel <em>déborde</em> les ressources du langage — motif romantique au cœur du roman."
@@ -270,7 +569,7 @@ const works = [
     {
       theme:"Nature & machine",
       prompt:"Quel renversement s'opère quand les personnages comprennent ce qu'est vraiment le « monstre » ?",
-      hint:"Moment de reconnaissance du Nautilus (partie I, chap. VII)",
+      hint:"💡 Moment de reconnaissance du Nautilus (partie I, chap. VII)",
       citation:"« L'animal, le monstre, le phénomène naturel qui avait intrigué le monde savant tout entier [...] c'était un phénomène plus étonnant encore, un phénomène de main d'homme. »",
       ref:"Partie I, chap. VII, p. 90",
       analyse:"<strong>Thème :</strong> Passage du naturel à l'artificiel. Verne interroge : jusqu'où la technique peut-elle imiter — surpasser — la nature ? Le vrai prodige est humain, non animal."
@@ -278,7 +577,7 @@ const works = [
     {
       theme:"Écologie / tuer pour tuer",
       prompt:"Comment Nemo condamne-t-il la chasse à la baleine pratiquée par les hommes ?",
-      hint:"Échange avec Ned Land (partie II, chap. XII)",
+      hint:"💡 Échange avec Ned Land (partie II, chap. XII)",
       citation:"« Ici, ce serait tuer pour tuer. Je sais bien que c'est un privilège réservé à l'homme, mais je n'admets pas ces passe-temps meurtriers. [...] vos pareils, maître Land, commettent une action blâmable. »",
       ref:"Partie II, chap. XII, p. 457",
       analyse:"<strong>Thème :</strong> Rare discours écologiste au XIXe s. Nemo renverse la supériorité humaine en vice : « privilège » devient synonyme de « blâmable ». Ned Land, chasseur, incarne l'instinct destructeur ordinaire."
@@ -286,7 +585,7 @@ const works = [
     {
       theme:"Majesté de la mer",
       prompt:"Quelle métaphore Nemo emploie-t-il pour définir la mer comme source de toute vie ?",
-      hint:"Discours fondateur de Nemo (partie I, chap. X)",
+      hint:"💡 Discours fondateur de Nemo (partie I, chap. X)",
       citation:"« la mer est le vaste réservoir de la nature »",
       ref:"Partie I, chap. X, p. 125",
       analyse:"<strong>Thème :</strong> La mer n'est pas un décor mais un <em>principe vital</em>. Le mot « réservoir » (réserve + source) concentre l'idée d'une nature inépuisable qui précède et dépasse l'homme."
@@ -294,7 +593,7 @@ const works = [
     {
       theme:"Violence de Nemo",
       prompt:"Comment Nemo justifie-t-il sa haine et sa vengeance devant Aronnax ?",
-      hint:"Destruction du navire ennemi (partie II, chap. XXI)",
+      hint:"💡 Destruction du navire ennemi (partie II, chap. XXI)",
       citation:"« Je suis le droit, je suis la justice ! [...] Je suis l'opprimé, et voilà l'oppresseur ! C'est par lui que tout ce que j'ai aimé, chéri, vénéré, patrie, femme, enfants, mon père, ma mère, j'ai vu tout périr ! »",
       ref:"Partie II, chap. XXI, p. 577",
       analyse:"<strong>Thème :</strong> Nemo se pose en tribunal souverain. L'énumération des pertes humanise enfin le personnage — mais en en faisant un « archange de la haine ». La logique de la justice bascule en démesure."
@@ -302,7 +601,7 @@ const works = [
     {
       theme:"Témoignage / expérience",
       prompt:"Comment Aronnax affirme-t-il la vérité de ce qu'il a vécu sous les mers ?",
-      hint:"Réflexion sur la vraisemblance du récit (partie II, chap. IX)",
+      hint:"💡 Réflexion sur la vraisemblance du récit (partie II, chap. IX)",
       citation:"« Je n'ai point rêvé. J'ai vu et senti ! »",
       ref:"Partie II, chap. IX, p. 412",
       analyse:"<strong>Thème :</strong> Double ancrage sensoriel (vue + sensation) contre le soupçon d'hallucination. Formule brève et martelée : le scientifique défend la réalité de l'expérience contre le merveilleux incroyable."
@@ -310,7 +609,7 @@ const works = [
     {
       theme:"Mort / nature / ironie",
       prompt:"Quelle réplique cinglante Nemo lance-t-il sur l'avantage du cimetière sous-marin ?",
-      hint:"Dialogue sur les morts en mer (partie I, chap. XXIV)",
+      hint:"💡 Dialogue sur les morts en mer (partie I, chap. XXIV)",
       citation:"« Vos morts y dorment, du moins tranquilles, capitaine, hors de l'atteinte des requins ! – Oui, monsieur, répondit gravement le capitaine Nemo, des requins et des hommes ! »",
       ref:"Partie I, chap. XXIV, p. 290",
       analyse:"<strong>Thème :</strong> Chute glaçante. Le requin est mis sur le même plan que l'homme. La mer-cercueil devient un refuge — critique implicite de la violence humaine plus redoutable que la nature."
@@ -318,7 +617,7 @@ const works = [
     {
       theme:"Nature créatrice vs destructrice",
       prompt:"Quelle loi Aronnax tire-t-il de la mine de perles pour opposer nature et instinct humain ?",
-      hint:"Pêcherie de Ceylan (partie II, chap. III)",
+      hint:"💡 Pêcherie de Ceylan (partie II, chap. III)",
       citation:"« je compris que cette mine était véritablement inépuisable, car la force créatrice de la nature l'emporte sur l'instinct destructif de l'homme. »",
       ref:"Partie II, chap. III, p. 324",
       analyse:"<strong>Thème :</strong> Antithèse structurante : création (nature) vs destruction (homme). La nature est déclarée invincible — mais le reste du roman nuancera ce triomphalisme avec des espèces menacées."
@@ -326,7 +625,7 @@ const works = [
     {
       theme:"Science / classification",
       prompt:"Comment résume-t-on en trois mots le rapport de Conseil à la science ?",
-      hint:"Portrait du domestique Conseil (partie I, chap. III)",
+      hint:"💡 Portrait du domestique Conseil (partie I, chap. III)",
       citation:"« Classer, c'était sa vie. »",
       ref:"Partie I, chap. III, p. 48",
       analyse:"<strong>Thème :</strong> Formule réductrice et comique : Conseil incarne la science <em>pure</em>, sans émotion. La classification taxonomique comme fin en soi — parodie douce de la posture naturaliste."
@@ -334,7 +633,7 @@ const works = [
     {
       theme:"Transgression / conquête",
       prompt:"Au pôle Sud, comment Nemo répond-il à la question « Au nom de qui ? »",
-      hint:"Atteinte du pôle Sud (partie II, chap. XIV)",
+      hint:"💡 Atteinte du pôle Sud (partie II, chap. XIV)",
       citation:"« Eh bien ! moi, capitaine Nemo, ce 21 mars 1868, j'ai atteint le pôle Sud [...] Au nom de qui, capitaine ? – Au mien, monsieur ! »",
       ref:"Partie II, chap. XIV, p. 494",
       analyse:"<strong>Thème :</strong> Parodie de la prise de possession coloniale : nul roi, nulle nation — seulement le <em>moi</em> absolu. Geste de démesure (hubris) qui fait de Nemo un héros et un tyran solitaire."
@@ -342,7 +641,7 @@ const works = [
     {
       theme:"Captivité consentie",
       prompt:"Quelle contradiction Aronnax ressent-il face aux merveilles sous-marines ?",
-      hint:"Premiers moments à bord du Nautilus (partie I, chap. X)",
+      hint:"💡 Premiers moments à bord du Nautilus (partie I, chap. X)",
       citation:"« j'oubliais, pour un instant, que la contemplation de ces choses sublimes ne pouvait valoir la liberté perdue. »",
       ref:"Partie I, chap. X, p. 121",
       analyse:"<strong>Thème :</strong> Tension centrale du roman : la beauté anesthésie le sentiment de captivité. Aronnax est prisonnier <em>consentant</em> — ambiguïté morale du personnage-narrateur."
@@ -350,7 +649,7 @@ const works = [
     {
       theme:"Mystère de Nemo",
       prompt:"Comment Aronnax interprète-t-il la retraite de Nemo dans les profondeurs ?",
-      hint:"Réflexion sur le passé de Nemo (partie II, chap. I)",
+      hint:"💡 Réflexion sur le passé de Nemo (partie II, chap. I)",
       citation:"« C'était encore pour lui un génie incompris qui, las des déceptions de la terre, avait dû se réfugier dans cet inaccessible milieu où ses instincts s'exerçaient. »",
       ref:"Partie II, chap. I, p. 292",
       analyse:"<strong>Thème :</strong> Nemo en « génie incompris » : héros romantique (Hugo, Byron). La mer comme exil choisi, lieu où s'exercent librement des facultés que la société a rejetées."
@@ -358,21 +657,19 @@ const works = [
     {
       theme:"Narration / écriture",
       prompt:"Sur quel matériau insolite Aronnax rédige-t-il son journal de bord ?",
-      hint:"Début de la rédaction à bord (partie I, chap. XV)",
+      hint:"💡 Début de la rédaction à bord (partie I, chap. XV)",
       citation:"« je commençai le journal de ces aventures, ce qui m'a permis de les raconter avec la plus scrupuleuse exactitude, et détail curieux, je l'écrivis sur un papier fabriqué avec la zostère marine. »",
       ref:"Partie I, chap. XV, p. 173",
       analyse:"<strong>Thème :</strong> Mise en abyme : le roman que nous lisons est né <em>sous la mer</em>, sur un papier marin. La zostère (plante marine) fait du récit lui-même un objet de la nature sous-marine."
     }
   ],
 
-  /* ══════════════════════════════════════════
-     1 — LA CONNAISSANCE DE LA VIE
-  ══════════════════════════════════════════ */
+  /* 1 — LA CONNAISSANCE DE LA VIE */
   [
     {
       theme:"Connaissance / analyse",
       prompt:"Comment Canguilhem définit-il l'acte de connaître en une formule lapidaire ?",
-      hint:"Introduction « La pensée et le vivant »",
+      hint:"💡 Introduction « La pensée et le vivant »",
       citation:"« Connaître, c'est analyser. »",
       ref:"Introduction « La pensée et le vivant »",
       analyse:"<strong>Thème :</strong> Formule axiomatique qui réduit la connaissance à une opération de décomposition. Mais Canguilhem montrera aussitôt la limite : la vie, elle, <em>synthétise</em> — elle résiste à l'analyse pure."
@@ -380,7 +677,7 @@ const works = [
     {
       theme:"Savoir / vie",
       prompt:"Quel paradoxe Canguilhem formule-t-il sur le rapport entre savoir et existence ?",
-      hint:"Introduction « La pensée et le vivant »",
+      hint:"💡 Introduction « La pensée et le vivant »",
       citation:"« On ne vit pas de savoir. »",
       ref:"Introduction « La pensée et le vivant »",
       analyse:"<strong>Thème :</strong> Rupture entre connaissance théorique et existence biologique. Le savoir est une <em>abstraction</em> qui ne nourrit pas — il faut passer par la vie pour que la connaissance ait sens."
@@ -388,7 +685,7 @@ const works = [
     {
       theme:"Connaissance comme méthode",
       prompt:"À quoi Canguilhem réduit-il finalement la connaissance dans son rapport à l'existence ?",
-      hint:"Introduction « La pensée et le vivant »",
+      hint:"💡 Introduction « La pensée et le vivant »",
       citation:"« La connaissance est donc une méthode générale pour la résolution directe ou indirecte des tensions entre l'homme et le milieu. »",
       ref:"Introduction « La pensée et le vivant »",
       analyse:"<strong>Thème :</strong> La connaissance n'est pas contemplative mais <em>opératoire</em>. Elle répond à une tension vitale — ce qui rapproche l'épistémologie de la biologie : connaître, c'est d'abord survivre."
@@ -396,7 +693,7 @@ const works = [
     {
       theme:"Vie comme expérience",
       prompt:"Comment Canguilhem définit-il la vie en la rapprochant de l'improvisation ?",
-      hint:"Chap. 2 « Machine et organisme »",
+      hint:"💡 Chap. 2 « Machine et organisme »",
       citation:"« L'organisme vivant agit selon l'empirisme. La vie est expérience, c'est-à-dire improvisation, utilisation des occurrences ; elle est tentative dans tous les sens. »",
       ref:"Chap. 2 « Machine et organisme »",
       analyse:"<strong>Thème :</strong> La vie comme <em>tâtonnement</em> radical : elle n'obéit pas à un plan mais explore. L'adjectif « tous les sens » (au propre et au figuré) élargit la vie à une aventure sans programme."
@@ -404,7 +701,7 @@ const works = [
     {
       theme:"Le vivant et son milieu",
       prompt:"Quelle est la définition centrale de Canguilhem sur le rapport du vivant à son milieu ?",
-      hint:"Chap. 3 « Le vivant et son milieu »",
+      hint:"💡 Chap. 3 « Le vivant et son milieu »",
       citation:"« Le propre du vivant, c'est de se faire son milieu, de se composer son milieu. »",
       ref:"Chap. 3 « Le vivant et son milieu »",
       analyse:"<strong>Thème :</strong> Renversement décisif : le milieu n'est pas une donnée extérieure mais une <em>construction</em> du vivant. L'organisme n'est pas passif — il institue son propre environnement."
@@ -412,7 +709,7 @@ const works = [
     {
       theme:"Vivre / rayonner",
       prompt:"Comment Canguilhem définit-il l'acte de vivre en termes de rayonnement ?",
-      hint:"Chap. 3 « Le vivant et son milieu »",
+      hint:"💡 Chap. 3 « Le vivant et son milieu »",
       citation:"« Vivre c'est rayonner, c'est organiser le milieu à partir d'un centre de référence qui ne peut lui-même être référé sans perdre sa signification originale. »",
       ref:"Chap. 3 « Le vivant et son milieu »",
       analyse:"<strong>Thème :</strong> La vie comme énergie centrifuge : elle <em>irradie</em> plutôt qu'elle ne reçoit. Le centre de référence (le vivant) ne peut être objectivé de l'extérieur — il est toujours sujet, jamais pur objet."
@@ -420,7 +717,7 @@ const works = [
     {
       theme:"Nature / impossibilités",
       prompt:"Quelle définition paradoxale Canguilhem donne-t-il de la nature ?",
-      hint:"Chap. 5 « La monstruosité et le monstrueux »",
+      hint:"💡 Chap. 5 « La monstruosité et le monstrueux »",
       citation:"« La nature se définit par des impossibilités autant que par des possibilités. »",
       ref:"Chap. 5 « La monstruosité et le monstrueux »",
       analyse:"<strong>Thème :</strong> La nature n'est pas un champ ouvert de tout ce qui peut être : elle est aussi un système de <em>contraintes</em>. Le normal et le monstrueux se définissent mutuellement par cet espace de limites."
@@ -428,7 +725,7 @@ const works = [
     {
       theme:"Milieu / universalité",
       prompt:"Quelle mutation conceptuelle Canguilhem observe-t-il autour de la notion de milieu ?",
-      hint:"Chap. 3 « Le vivant et son milieu »",
+      hint:"💡 Chap. 3 « Le vivant et son milieu »",
       citation:"« La notion de milieu est en train de devenir un mode universel et obligatoire de saisie de l'expérience et de l'existence des êtres vivants. »",
       ref:"Chap. 3 « Le vivant et son milieu »",
       analyse:"<strong>Thème :</strong> Le milieu comme <em>paradigme</em> moderne. Canguilhem en fait le concept clé de la biologie contemporaine — mais va aussitôt le critiquer pour son insuffisance à rendre compte du vivant actif."
@@ -436,7 +733,7 @@ const works = [
     {
       theme:"Monstre / norme",
       prompt:"Quelle fonction paradoxale le monstre remplit-il dans le laboratoire de l'embryologiste ?",
-      hint:"Chap. 5 « La monstruosité et le monstrueux »",
+      hint:"💡 Chap. 5 « La monstruosité et le monstrueux »",
       citation:"« Le monstre est dans le bocal de l'embryologiste où il sert à enseigner la norme. »",
       ref:"Chap. 5 « La monstruosité et le monstrueux »",
       analyse:"<strong>Thème :</strong> Formule iconique : le monstre n'est pas l'autre de la norme mais son <em>instrument pédagogique</em>. La pathologie révèle le normal — thèse centrale de toute l'œuvre de Canguilhem."
@@ -444,7 +741,7 @@ const works = [
     {
       theme:"Nature / absurde",
       prompt:"Comment Canguilhem relativise-t-il le jugement humain sur ce qui semble absurde dans la nature ?",
-      hint:"Partie I, « L'expérimentation en biologie animale »",
+      hint:"💡 Partie I, « L'expérimentation en biologie animale »",
       citation:"« Ce qui est absurde à nos yeux ne l'est pas nécessairement au regard de la nature. »",
       ref:"Partie I : Méthode, « L'expérimentation en biologie animale »",
       analyse:"<strong>Thème :</strong> Décentrement épistémique : la nature a ses propres rationalités inaccessibles à l'entendement humain. L'absurde n'est qu'un manque de compréhension — leçon d'humilité pour la science."
@@ -452,7 +749,7 @@ const works = [
     {
       theme:"Vivant / débat avec le milieu",
       prompt:"Comment Canguilhem décrit-il le rapport fondamental entre le vivant et son milieu ?",
-      hint:"Chap. 3 « Le vivant et son milieu »",
+      hint:"💡 Chap. 3 « Le vivant et son milieu »",
       citation:"« Entre le vivant et le milieu, le rapport s'établit comme un débat où le vivant apporte ses normes propres d'appréciation des situations, où il domine le milieu, et se l'accommode. »",
       ref:"Chap. 3 « Le vivant et son milieu »",
       analyse:"<strong>Thème :</strong> Le mot « débat » politise la biologie : le vivant n'est pas soumis au milieu, il <em>négocie</em>. Cette normativité du vivant est le fil directeur de toute l'œuvre de Canguilhem."
@@ -460,7 +757,7 @@ const works = [
     {
       theme:"Connaissance / devenir imprévisible",
       prompt:"Pourquoi la connaissance de la vie exige-t-elle des « conversions imprévisibles » ?",
-      hint:"Partie I, « L'expérimentation en biologie animale »",
+      hint:"💡 Partie I, « L'expérimentation en biologie animale »",
       citation:"« La connaissance de la vie doit s'accomplir par conversions imprévisibles, s'efforçant de saisir un devenir dont le sens ne se révèle jamais si nettement à notre entendement que lorsqu'il déconcerte. »",
       ref:"Partie I : Méthode, « L'expérimentation en biologie animale »",
       analyse:"<strong>Thème :</strong> La méthode scientifique classique (prévisibilité, répétition) est insuffisante face au vivant. C'est précisément quand la vie <em>surprend</em> qu'elle révèle quelque chose d'essentiel."
@@ -468,7 +765,7 @@ const works = [
     {
       theme:"Domination de la nature",
       prompt:"À quelle condition l'homme peut-il se rendre maître de la nature selon Canguilhem ?",
-      hint:"Chap. 2 « Machine et organisme »",
+      hint:"💡 Chap. 2 « Machine et organisme »",
       citation:"« L'homme ne peut se rendre maître et possesseur de la nature que s'il nie toute finalité naturelle et s'il peut tenir toute la nature, y compris la nature apparemment animée, hors lui-même, pour un moyen. »",
       ref:"Chap. 2 « Machine et organisme »",
       analyse:"<strong>Thème :</strong> Critique de la domination cartésienne. Canguilhem montre que réduire la nature à un « moyen » implique d'en nier la finalité interne — ce que le vivant, précisément, résiste à faire."
@@ -476,7 +773,7 @@ const works = [
     {
       theme:"Bêtise / humilité scientifique",
       prompt:"Quelle étrange condition Canguilhem pose-t-il pour faire de la biologie ?",
-      hint:"Introduction « La pensée et le vivant »",
+      hint:"💡 Introduction « La pensée et le vivant »",
       citation:"« pour faire de la biologie, même avec l'aide de l'intelligence, nous avons parfois besoin de nous sentir bêtes ».",
       ref:"Introduction « La pensée et le vivant »",
       analyse:"<strong>Thème :</strong> Formule provocatrice : la « bêtise » ici signifie se mettre à la place de l'animal, abandonner l'arrogance anthropologique. La biologie exige une forme d'empathie corporelle avec le vivant étudié."
@@ -484,21 +781,19 @@ const works = [
     {
       theme:"Expérience / fonction",
       prompt:"Comment Canguilhem articule-t-il expérience, fonction et vie dans un cycle ?",
-      hint:"Partie I, « L'expérimentation en biologie animale »",
+      hint:"💡 Partie I, « L'expérimentation en biologie animale »",
       citation:"« Nous apprenons nos fonctions dans des expériences et nos fonctions sont ensuite des expériences formalisées. Et l'expérience, c'est d'abord la fonction générale de tout vivant, c'est-à-dire son débat avec le milieu. »",
       ref:"Partie I : Méthode, « L'expérimentation en biologie animale »",
       analyse:"<strong>Thème :</strong> Circularité productive : vie → expérience → fonction → nouvelle expérience. La vie n'est pas un mécanisme linéaire mais un processus d'apprentissage et de rétroaction permanents."
     }
   ],
 
-  /* ══════════════════════════════════════════
-     2 — LE MUR INVISIBLE
-  ══════════════════════════════════════════ */
+  /* 2 — LE MUR INVISIBLE */
   [
     {
       theme:"Écriture / raison",
       prompt:"Pourquoi la narratrice s'impose-t-elle d'écrire malgré tout ?",
-      hint:"Toutes premières pages (p. 9)",
+      hint:"💡 Toutes premières pages (p. 9)",
       citation:"« M'obliger à écrire me semble le seul moyen de ne pas perdre la raison. »",
       ref:"p. 9",
       analyse:"<strong>Thème :</strong> L'écriture comme dernier acte de résistance humaine face à l'anéantissement. Le journal (et donc le roman) naît d'un impératif de survie psychique — non d'un désir littéraire."
@@ -506,7 +801,7 @@ const works = [
     {
       theme:"Métamorphose identitaire",
       prompt:"Comment la narratrice décrit-elle l'écart entre son ancienne et sa nouvelle identité ?",
-      hint:"Réflexion sur la transformation (p. 52)",
+      hint:"💡 Réflexion sur la transformation (p. 52)",
       citation:"« Quand il m'arrive de penser à la femme que j'étais avant que le mur fasse irruption dans ma vie, j'ai peine à me reconnaître en elle. »",
       ref:"p. 52",
       analyse:"<strong>Thème :</strong> Le mur ne divise pas seulement l'espace — il <em>fracture</em> le moi. L'avant et l'après sont deux personnes distinctes, le mur fonctionnant comme une ligne de partage identitaire radicale."
@@ -514,7 +809,7 @@ const works = [
     {
       theme:"Corps / connaissance",
       prompt:"Quelle distinction Haushofer établit-elle entre savoir intellectuel et savoir corporel ?",
-      hint:"Réflexion sur l'apprentissage (p. 72)",
+      hint:"💡 Réflexion sur l'apprentissage (p. 72)",
       citation:"« Ce n'est que lorsque la connaissance d'une chose se répand lentement à travers le corps qu'on la sait vraiment. »",
       ref:"p. 72",
       analyse:"<strong>Thème :</strong> Épistémologie du corps : la vraie connaissance n'est pas cérébrale mais <em>somatique</em>. Haushofer rejoint ici Canguilhem : l'expérience est d'abord organique avant d'être intellectuelle."
@@ -522,7 +817,7 @@ const works = [
     {
       theme:"Métamorphose / végétalisation",
       prompt:"À quel être végétal la narratrice se compare-t-elle après des mois d'isolement ?",
-      hint:"Description de sa transformation physique (p. 96)",
+      hint:"💡 Description de sa transformation physique (p. 96)",
       citation:"« je ressemble davantage à un arbre qu'à un être humain, une souche brune et coriace qui a besoin de toute sa force pour survivre »",
       ref:"p. 96",
       analyse:"<strong>Thème :</strong> La frontière homme / nature s'efface. La femme devient végétal : la métaphore dit l'enracinement, la résistance silencieuse, mais aussi la perte progressive de l'humanité sociale."
@@ -530,7 +825,7 @@ const works = [
     {
       theme:"Homme / animal",
       prompt:"Quelle équivalence radicale Haushofer établit-elle entre la narratrice et sa chatte ?",
-      hint:"Portrait du lien avec l'animal (p. 235)",
+      hint:"💡 Portrait du lien avec l'animal (p. 235)",
       citation:"« La chatte et moi étions faites de la même étoffe et embarquées sur le même bateau qui, avec tout ce qui vivait, nous entraînait vers les grandes et sombres chutes d'eau. »",
       ref:"p. 235",
       analyse:"<strong>Thème :</strong> Solidarité des êtres vivants face à la mort. La métaphore du bateau emporté dit le destin commun : femme et animal sont égaux devant la disparition — humanisme radicalement élargi."
@@ -538,7 +833,7 @@ const works = [
     {
       theme:"Frontière homme / animal",
       prompt:"Quelle loi sociale et affective Haushofer formule-t-elle sur les barrières entre espèces ?",
-      hint:"Réflexion sur la vie avec les animaux (p. 274)",
+      hint:"💡 Réflexion sur la vie avec les animaux (p. 274)",
       citation:"« Les barrières entre les hommes et les animaux tombent très facilement. Nous appartenons à la même grande famille et quand nous sommes solitaires et malheureux, nous acceptons plus volontiers l'amitié de ces cousins éloignés. »",
       ref:"p. 274",
       analyse:"<strong>Thème :</strong> La solitude révèle une parenté que la vie sociale dissimule. Les animaux ne sont pas inférieurs — ils sont des <em>cousins</em> que la souffrance rapproche. Critique douce de l'anthropocentrisme."
@@ -546,7 +841,7 @@ const works = [
     {
       theme:"Condition humaine / raison",
       prompt:"Pourquoi les hommes sont-ils les plus à plaindre selon la narratrice ?",
-      hint:"Réflexion sur la conscience (p. 278)",
+      hint:"💡 Réflexion sur la conscience (p. 278)",
       citation:"« ce sont les hommes qui sont sans doute le plus à plaindre, parce qu'ils possèdent juste assez de raison pour lutter contre le cours naturel des choses. Cela les a rendus méchants, désespérés et bien peu dignes d'être aimés. »",
       ref:"p. 278",
       analyse:"<strong>Thème :</strong> Paradoxe de la raison : elle est cause de souffrance, non de salut. Rejoignant Canguilhem, Haushofer montre que la conscience de la condition aggrave la condition elle-même."
@@ -554,7 +849,7 @@ const works = [
     {
       theme:"Violence / répugnance à tuer",
       prompt:"Quelle règle morale fondamentale la narratrice s'impose-t-elle vis-à-vis du vivant ?",
-      hint:"Réflexion sur la chasse (p. 144)",
+      hint:"💡 Réflexion sur la chasse (p. 144)",
       citation:"« Je ne perdrai jamais cette répugnance à tuer. »",
       ref:"p. 144",
       analyse:"<strong>Thème :</strong> Déclaration éthique centrale. Dans un monde où tuer pour se nourrir est nécessaire, <em>ressentir</em> la répugnance reste l'ultime marque d'humanité. L'acte est parfois inévitable ; le dégoût, irréductible."
@@ -562,7 +857,7 @@ const works = [
     {
       theme:"Soin / difficulté d'aimer",
       prompt:"Quelle hiérarchie morale Haushofer établit-elle entre tuer et prendre soin ?",
-      hint:"Réflexion sur le soin des animaux (p. 188)",
+      hint:"💡 Réflexion sur le soin des animaux (p. 188)",
       citation:"« Aimer et prendre soin d'un être est une tâche très pénible et beaucoup plus difficile que tuer ou détruire. »",
       ref:"p. 188",
       analyse:"<strong>Thème :</strong> Renversement de valeur : la destruction est présentée comme <em>plus facile</em> que le soin. Le roman entier illustre cette thèse — la narratrice s'épuise dans le maintien de la vie, non dans sa suppression."
@@ -570,7 +865,7 @@ const works = [
     {
       theme:"Nature / piège",
       prompt:"Quelle image radicale la narratrice utilise-t-elle pour décrire la nature envers ses créatures ?",
-      hint:"Réflexion sur la condition animale (p. 280)",
+      hint:"💡 Réflexion sur la condition animale (p. 280)",
       citation:"« Par moments, j'avais l'impression que la nature ne constituait pour ses créatures qu'un immense piège. »",
       ref:"p. 280",
       analyse:"<strong>Thème :</strong> La nature bienveillante et nourricière (de Verne) se retourne ici en piège. Vision plus sombre : la nature n'est pas une mère mais une indifférente — les créatures y naissent et y meurent sans finalité."
@@ -578,7 +873,7 @@ const works = [
     {
       theme:"Résilience de la nature",
       prompt:"Quelle reconquête la narratrice prédit-elle pour la forêt après sa disparition ?",
-      hint:"Réflexion sur l'avenir du pré (p. 215)",
+      hint:"💡 Réflexion sur l'avenir du pré (p. 215)",
       citation:"« Un jour, je ne serai plus là et plus personne ne fauchera le pré, alors le sous-bois gagnera du terrain puis la forêt s'avancera jusqu'au mur en reconquérant le sol que l'homme lui avait volé. »",
       ref:"p. 215",
       analyse:"<strong>Thème :</strong> La forêt est présentée comme une puissance patiente et inexorable. La mort de la narratrice n'est pas une fin mais une libération pour la nature — qui reprend ce que l'homme lui avait pris."
@@ -586,7 +881,7 @@ const works = [
     {
       theme:"Continuation / espoir",
       prompt:"Comment la narratrice réagit-elle face à la mort de ses animaux et à la continuité de la vie ?",
-      hint:"Dernières pages du roman (p. 321)",
+      hint:"💡 Dernières pages du roman (p. 321)",
       citation:"« Je vois que ce n'est pas la fin. Tout continue. Depuis ce matin, j'ai la certitude que Bella attend un veau. Et peut-être, qui sait, y aura-t-il de nouveaux petits chats. »",
       ref:"p. 321",
       analyse:"<strong>Thème :</strong> Fin ouverte sur la persistance de la vie. La naissance d'un veau comme résistance au deuil : la nature continue indépendamment de la tragédie humaine. Espoir biologique, non métaphysique."
@@ -594,7 +889,7 @@ const works = [
     {
       theme:"Conscience / privilège douloureux",
       prompt:"Quel « douteux cadeau de la nature » la narratrice reconnaît-elle à l'être humain ?",
-      hint:"Réflexion sur la condition humaine (p. 235)",
+      hint:"💡 Réflexion sur la condition humaine (p. 235)",
       citation:"« En tant qu'être humain, mon unique privilège était de me rendre compte de la situation, sans pouvoir y changer quoi que ce soit. Un assez douteux cadeau de la nature si on y réfléchissait. »",
       ref:"p. 235",
       analyse:"<strong>Thème :</strong> Ironie tragique : la conscience est le propre de l'homme, mais ici elle ne confère aucun pouvoir — seulement la lucidité de l'impuissance. Écho au Canguilhem sur la raison comme fardeau."
@@ -602,7 +897,7 @@ const works = [
     {
       theme:"Dissolution du moi / fusion",
       prompt:"Comment la narratrice décrit-elle l'impossibilité de maintenir un moi séparé dans la prairie ?",
-      hint:"Expérience de dissolution du sujet (p. 215)",
+      hint:"💡 Expérience de dissolution du sujet (p. 215)",
       citation:"« Dans le silence bruissant de la prairie, sous le ciel immense, il m'était presque impossible de rester un moi unique et séparé, une aveugle petite vie entêtée qui refusait de se fondre dans la grande communauté. »",
       ref:"p. 215",
       analyse:"<strong>Thème :</strong> Le sujet individuel s'effrite face à la nature. La « grande communauté » désigne le tissu vivant global. La résistance du moi est qualifiée d'« aveugle » — la fusion serait peut-être sagesse."
@@ -610,7 +905,7 @@ const works = [
     {
       theme:"Technologie / faux dieux",
       prompt:"Comment la narratrice juge-t-elle les infrastructures humaines après la disparition des hommes ?",
-      hint:"Réflexion sur la civilisation disparue (p. 259)",
+      hint:"💡 Réflexion sur la civilisation disparue (p. 259)",
       citation:"« Maintenant que les hommes n'existent plus, les conduites de gaz, les centrales électriques et les oléoducs montrent leur vrai visage lamentable. On en avait fait des dieux au lieu de s'en servir comme d'objets d'usage. »",
       ref:"p. 259",
       analyse:"<strong>Thème :</strong> La catastrophe révèle l'idolâtrie technologique : l'humanité avait divinisé ses propres outils. Sans hommes pour les entretenir, ces « dieux » ne sont que ferraille — critique de la modernité techniciste."
@@ -618,6 +913,15 @@ const works = [
   ]
 ];
 
+const workNames = [
+  "Vingt Mille Lieues",
+  "Connaissance de la vie",
+  "Le Mur invisible"
+];
+
+/* ══════════════════════════════════════════
+   MODE NORMAL
+══════════════════════════════════════════ */
 let currentWork = 0;
 let currentCard = 0;
 let flipped = false;
@@ -651,7 +955,7 @@ function render() {
       <div>
         <div class="prompt-label">Question</div>
         <div class="prompt-text">${c.prompt}</div>
-        <div class="prompt-hint">💡 ${c.hint}</div>
+        <div class="prompt-hint">${c.hint}</div>
       </div>
     </div>
     <div class="verso">
@@ -680,6 +984,182 @@ function changeCard(dir) {
   render();
 }
 
+/* ══════════════════════════════════════════
+   MODE DICTÉE
+══════════════════════════════════════════ */
+let dicteeQueue = [];
+let dicteeIndex = 0;
+let dicteeOk = 0;
+let dicteeTotal = 0;
+let dicteeVerified = false;
+
+function switchMode(mode) {
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  if (mode === 'normal') {
+    document.getElementById('normalMode').style.display = 'block';
+    document.getElementById('dicteeMode').style.display = 'none';
+    document.querySelector('.mode-tab:nth-child(1)').classList.add('active');
+  } else {
+    document.getElementById('normalMode').style.display = 'none';
+    document.getElementById('dicteeMode').style.display = 'block';
+    document.querySelector('.mode-tab:nth-child(2)').classList.add('active');
+    startDictee();
+  }
+}
+
+function buildQueue() {
+  // Mélange toutes les 45 cartes
+  let all = [];
+  works.forEach((work, wi) => {
+    work.forEach(card => {
+      all.push({ ...card, workIdx: wi });
+    });
+  });
+  // Fisher-Yates shuffle
+  for (let i = all.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  return all;
+}
+
+function startDictee() {
+  dicteeQueue = buildQueue();
+  dicteeIndex = 0;
+  dicteeOk = 0;
+  dicteeTotal = 0;
+  dicteeVerified = false;
+
+  document.getElementById('dicteeCard').style.display = 'flex';
+  document.getElementById('sessionEnd').classList.remove('show');
+  renderDictee();
+}
+
+function renderDictee() {
+  dicteeVerified = false;
+  const c = dicteeQueue[dicteeIndex];
+  const wi = c.workIdx;
+
+  const card = document.getElementById('dicteeCard');
+  card.className = `dictee-card dc-work-${wi}`;
+
+  document.getElementById('dicteeTheme').textContent = c.theme;
+  document.getElementById('dicteeTheme').className = `theme-badge`;
+  document.getElementById('dicteeOeuvre').textContent = workNames[wi];
+
+  document.getElementById('dicteePrompt').textContent = c.prompt;
+  document.getElementById('dicteeHint').textContent = c.hint;
+
+  const ta = document.getElementById('dicteeInput');
+  ta.value = '';
+  ta.className = 'dictee-textarea';
+  ta.disabled = false;
+  ta.placeholder = 'Écrivez la citation ici…';
+  ta.focus();
+
+  const res = document.getElementById('dicteeResult');
+  res.className = 'dictee-result';
+  res.style.display = 'none';
+
+  document.getElementById('btnVerif').style.display = 'inline-block';
+
+  updateDicteeProgress();
+}
+
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // accents
+    .replace(/[«»""''‹›]/g, '')                         // guillemets
+    .replace(/[.,;:!?…\-–—]/g, '')                      // ponctuation
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function similarity(a, b) {
+  // Ratio de mots communs (simple mais efficace)
+  const wa = new Set(normalize(a).split(' ').filter(w => w.length > 2));
+  const wb = new Set(normalize(b).split(' ').filter(w => w.length > 2));
+  if (wa.size === 0 || wb.size === 0) return 0;
+  let common = 0;
+  wa.forEach(w => { if (wb.has(w)) common++; });
+  return common / Math.max(wa.size, wb.size);
+}
+
+function verifier() {
+  if (dicteeVerified) return;
+  dicteeVerified = true;
+
+  const c = dicteeQueue[dicteeIndex];
+  const input = document.getElementById('dicteeInput').value;
+  const score = similarity(input, c.citation);
+  const isOk = score >= 0.65; // seuil de 65% de mots-clés corrects
+
+  dicteeTotal++;
+  if (isOk) dicteeOk++;
+
+  const ta = document.getElementById('dicteeInput');
+  ta.disabled = true;
+  ta.className = 'dictee-textarea ' + (isOk ? 'correct' : 'wrong');
+
+  const res = document.getElementById('dicteeResult');
+  res.style.display = 'block';
+  res.className = 'dictee-result show ' + (isOk ? 'ok' : 'nok');
+
+  document.getElementById('resultLabel').textContent = isOk ? '✓ Bonne réponse !' : '✗ Pas tout à fait…';
+  document.getElementById('resultMsg').textContent = isOk
+    ? 'Excellent ! Voici la citation exacte :'
+    : (input.trim() === '' ? 'Vous n\'avez rien écrit. La citation était :' : 'Voici la citation exacte :');
+  document.getElementById('resultCitation').textContent = c.citation;
+
+  document.getElementById('btnVerif').style.display = 'none';
+  updateDicteeProgress();
+}
+
+function nextDictee() {
+  dicteeIndex++;
+  if (dicteeIndex >= dicteeQueue.length) {
+    showSessionEnd();
+  } else {
+    renderDictee();
+  }
+}
+
+function showSessionEnd() {
+  document.getElementById('dicteeCard').style.display = 'none';
+  const end = document.getElementById('sessionEnd');
+  end.classList.add('show');
+  document.getElementById('finalOk').textContent = dicteeOk;
+  document.getElementById('finalTotal').textContent = dicteeTotal;
+  const pct = Math.round(dicteeOk / dicteeTotal * 100);
+  let msg = '';
+  if (pct >= 90) msg = '🏆 Excellent ! Vous maîtrisez très bien ces citations.';
+  else if (pct >= 70) msg = '👍 Bien joué ! Encore quelques révisions et ce sera parfait.';
+  else if (pct >= 50) msg = '📚 Continuez à réviser, vous progressez !';
+  else msg = '💪 Ne vous découragez pas, relisez les citations et réessayez.';
+  document.getElementById('finalMsg').textContent = msg;
+  updateDicteeProgress();
+}
+
+function updateDicteeProgress() {
+  const total = dicteeQueue.length;
+  const done = dicteeTotal;
+  const pct = total > 0 ? (done / total * 100).toFixed(0) : 0;
+  document.getElementById('dicteeProgressFill').style.width = pct + '%';
+  document.getElementById('dicteeScoreText').textContent = `${dicteeOk} ✓ / ${dicteeTotal} répondues`;
+}
+
+// Allow Enter key to submit (Shift+Enter = newline)
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('dicteeMode').style.display !== 'none') {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!dicteeVerified) verifier();
+    }
+  }
+});
+
+// Init
 render();
 </script>
 </body>
